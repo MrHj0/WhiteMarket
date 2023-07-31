@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Templete.Migration;
+namespace WhiteMarket.Migration;
 
 internal static class Runner
 {

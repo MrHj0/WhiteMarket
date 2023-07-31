@@ -23,8 +23,8 @@ namespace WhiteMarket.Migration.Migrations
             Delete.Table("SaleCustomerFactors");
             Delete.Table("SaleAccountingFactors");
             Delete.Table("ProductEntryFactors");
-            Delete.Table("Groups");
             Delete.Table("Products");
+            Delete.Table("Groups");
         }
         private void CreateSaleAccountingFactors()
         {
@@ -70,7 +70,7 @@ namespace WhiteMarket.Migration.Migrations
                 .WithColumn("Title").AsString(50).NotNullable()
                 .WithColumn("Status").AsInt32().NotNullable()
                 .WithColumn("Inventory").AsInt32().NotNullable()
-                .WithColumn("MinimumInventory").AsInt16().NotNullable()
+                .WithColumn("MinimumInventory").AsInt32().NotNullable()
                 .WithColumn("GroupId").AsInt32().NotNullable()
                 .ForeignKey("FK_Products_Groups"
                            ,"Groups", "Id");

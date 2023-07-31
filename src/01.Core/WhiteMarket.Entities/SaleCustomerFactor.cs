@@ -15,6 +15,6 @@ namespace WhiteMarket.Entities
         public int Price { get; set; }
         public int Count { get; set; }
         public string CustomerName { get; set; }
-        public DateOnly Date { get; set; }
+        public DateTime Date { get; set; }
     }
 }
