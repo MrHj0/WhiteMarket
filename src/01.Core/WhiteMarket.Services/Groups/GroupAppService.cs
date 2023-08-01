@@ -36,16 +36,29 @@ namespace WhiteMarket.Services.Groups
             var group = _groupRepository
                 .GetGroupById(groupId);
 
-            if(group.Products.Count() != 0)
-            {
-                throw new GroupHasProductsException();
-            }
+            StopIfGroupNotFound(group);
+
+            StopIfGroupHasProduct(group);
 
 
             _groupRepository.Delete(group);
             _unitOfWork.Complete();
         }
 
+        private void StopIfGroupHasProduct(Group group)
+        {
+            if (group.Products.Count() != 0)
+            {
+                throw new GroupHasProductsException();
+            }
+        }
+        private void StopIfGroupNotFound(Group group)
+        {
+            if(group == null)
+            {
+                throw new GroupNotFoundException();
+            }
+        }
         private void StopIfGroupNameIsDuplicated(string name)
         {
             var isDuplicateName = _groupRepository.IsDuplicatedName(name);
