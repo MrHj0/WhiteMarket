@@ -39,7 +39,7 @@ namespace WhiteMarket.Services.Unit.Tests
             DbContext.Save(group);
             var dto = AddGroupDtoFactory.Generate();
 
-            var expected = ()=> _sut.Define(dto);
+            var expected = () => _sut.Define(dto);
 
             expected.Should().ThrowExactly<GroupNameIsDuplicatedException>();
         }
@@ -67,7 +67,7 @@ namespace WhiteMarket.Services.Unit.Tests
             };
             DbContext.Save(product);
 
-            var expected = ()=> _sut.Delete(group.Id);
+            var expected = () => _sut.Delete(group.Id);
 
             expected.Should().ThrowExactly<GroupHasProductsException>();
         }
@@ -77,9 +77,59 @@ namespace WhiteMarket.Services.Unit.Tests
         {
             var invalidId = -1;
 
-            var expected = ()=> _sut.Delete(invalidId);
+            var expected = () => _sut.Delete(invalidId);
 
             expected.Should().ThrowExactly<GroupNotFoundException>();
+        }
+
+        [Fact]
+        public void EditGroupName_edit_group_name_properly()
+        {
+            var group = GroupFactory.Generate();
+            DbContext.Save(group);
+            var newName = "dummy_edit_name";
+
+            _sut.EditGroupName(group.Id, newName);
+
+            var expected = ReadContext.Set<Group>().Single();
+            expected.Name.Should().Be(newName);
+        }
+
+        [Fact]
+        public void EditGroupName_throw_exception_when_group_id_is_invalid()
+        {
+            var invalidId = -1;
+            var newName = "dummy_edit_name";
+
+            var expected = () => _sut.EditGroupName(invalidId, newName);
+
+            expected.Should().ThrowExactly<GroupNotFoundException>();
+        }
+
+        [Fact]
+        public void EditGroupName_throw_exception_when_group_name_is_duplicated()
+        {
+            var group1 = GroupFactory.Generate();
+            DbContext.Save(group1);
+            var group2 = GroupFactory.Generate("dummy_name_2");
+            DbContext.Save(group2);
+            var newName = "dummy";
+
+            var expected = () => _sut.EditGroupName(group2.Id, newName);
+
+            expected.Should().ThrowExactly<GroupNameIsDuplicatedException>();
+        }
+
+        [Fact]
+        public void GetAllGroups()
+        {
+            var group = GroupFactory.Generate();
+            DbContext.Save(group);
+
+            var expected = _sut.GetAllGroups();
+
+            expected.Should().HaveCount(1);
+            expected.Single().Name.Should().Be(group.Name);
         }
     }
 }

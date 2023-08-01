@@ -21,13 +21,25 @@ namespace WhiteMarket.Services.Groups
         public void Define(AddGroupDto dto)
         {
             StopIfGroupNameIsDuplicated(dto.Name);
-            
+
             var group = new Group
             {
                 Name = dto.Name
             };
 
             _groupRepository.Add(group);
+            _unitOfWork.Complete();
+        }
+
+        public void EditGroupName(int groupId, string name)
+        {
+            var group = _groupRepository.GetGroupById(groupId);
+
+            StopIfGroupNotFound(group);
+
+            StopIfGroupNameIsDuplicated(groupId, name);
+
+            group.Name = name;
             _unitOfWork.Complete();
         }
 
@@ -54,7 +66,7 @@ namespace WhiteMarket.Services.Groups
         }
         private void StopIfGroupNotFound(Group group)
         {
-            if(group == null)
+            if (group == null)
             {
                 throw new GroupNotFoundException();
             }
@@ -66,6 +78,21 @@ namespace WhiteMarket.Services.Groups
             {
                 throw new GroupNameIsDuplicatedException();
             }
+        }
+        private void StopIfGroupNameIsDuplicated(int groupId,string name)
+        {
+            var isDuplicateName = _groupRepository
+                .IsDuplicatedNameExceptThisGroup(groupId, name);
+
+            if (isDuplicateName)
+            {
+                throw new GroupNameIsDuplicatedException();
+            }
+        }
+
+        public HashSet<GetAllGroupsDto> GetAllGroups()
+        {
+            throw new NotImplementedException();
         }
     }
 }

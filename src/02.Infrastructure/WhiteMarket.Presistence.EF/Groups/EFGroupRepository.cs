@@ -36,5 +36,11 @@ namespace WhiteMarket.Presistence.EF.Groups
         {
             return _groups.Any(_ => _.Name == name);
         }
+
+        public bool IsDuplicatedNameExceptThisGroup(int groupId, string name)
+        {
+            return _groups
+                .Any(_ => _.Name == name && _.Id != groupId);
+        }
     }
 }
