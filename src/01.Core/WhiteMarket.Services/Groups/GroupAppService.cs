@@ -92,7 +92,12 @@ namespace WhiteMarket.Services.Groups
 
         public HashSet<GetAllGroupsDto> GetAllGroups()
         {
-            throw new NotImplementedException();
+            return _groupRepository.GetAllGroups();
+        }
+
+        public GetOneGroupWithProductsDto GetOneGroupWithProducts(int groupId)
+        {
+            return _groupRepository.GetOneGroupWithProductsByGroupId(groupId);
         }
     }
 }

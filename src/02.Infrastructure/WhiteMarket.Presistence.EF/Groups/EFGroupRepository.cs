@@ -2,6 +2,7 @@
 using WhiteMarket.Entities;
 using WhiteMarket.Presistence.EF;
 using WhiteMarket.Services.Groups.Contracts;
+using WhiteMarket.Services.Groups.Contracts.Dto;
 
 namespace WhiteMarket.Presistence.EF.Groups
 {
@@ -24,12 +25,34 @@ namespace WhiteMarket.Presistence.EF.Groups
             _groups.Remove(group);
         }
 
+        public HashSet<GetAllGroupsDto> GetAllGroups()
+        {
+            return _groups.Select(_ => new GetAllGroupsDto
+            {
+
+                Id = _.Id,
+                Name = _.Name
+            }).ToHashSet();
+        }
+
         public Group? GetGroupById(int groupId)
         {
             return _groups
                 .Where(_ => _.Id == groupId)
-                .Include(_=>_.Products)
+                .Include(_ => _.Products)
                 .FirstOrDefault();
+        }
+
+        public GetOneGroupWithProductsDto GetOneGroupWithProductsByGroupId(int groupId)
+        {
+            return _groups
+                .Where(_ => _.Id == groupId)
+                .Select(_ => new GetOneGroupWithProductsDto
+                {
+                    Id = _.Id,
+                    Name = _.Name,
+                    //Products = _.Products.Select(p => p.Title).ToHashSet()
+                }).First();
         }
 
         public bool IsDuplicatedName(string name)

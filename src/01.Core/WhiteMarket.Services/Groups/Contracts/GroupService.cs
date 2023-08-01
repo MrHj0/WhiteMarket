@@ -8,5 +8,6 @@ namespace WhiteMarket.Services.Groups.Contracts
         void Delete(int groupId);
         void EditGroupName(int groupId, string name);
         HashSet<GetAllGroupsDto> GetAllGroups();
+        GetOneGroupWithProductsDto GetOneGroupWithProducts(int groupId);
     }
 }

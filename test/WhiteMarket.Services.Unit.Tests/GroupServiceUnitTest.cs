@@ -131,5 +131,23 @@ namespace WhiteMarket.Services.Unit.Tests
             expected.Should().HaveCount(1);
             expected.Single().Name.Should().Be(group.Name);
         }
+
+        [Fact]
+        public void GetOneGroupWithProducts()
+        {
+            var group = GroupFactory.Generate();
+            var product = new Product
+            {
+                Title = "dummy-title",
+                Group = group
+            };
+            DbContext.Save(product);
+
+            var expected = _sut.GetOneGroupWithProducts(group.Id);
+            expected.Id.Should().Be(group.Id);
+            expected.Name.Should().Be(group.Name);
+            expected.Products.Should().HaveCount(1);
+            expected.Products.Single().Should().Be(product.Title);
+        }
     }
 }

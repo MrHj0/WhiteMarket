@@ -1,4 +1,5 @@
 ﻿using WhiteMarket.Entities;
+using WhiteMarket.Services.Groups.Contracts.Dto;
 
 namespace WhiteMarket.Services.Groups.Contracts
 {
@@ -9,5 +10,7 @@ namespace WhiteMarket.Services.Groups.Contracts
         bool IsDuplicatedName(string name);
         bool IsDuplicatedNameExceptThisGroup(int groupId,string name);
         Group? GetGroupById(int groupId);
+        HashSet<GetAllGroupsDto> GetAllGroups();
+        GetOneGroupWithProductsDto GetOneGroupWithProductsByGroupId(int groupId);
     }
 }
