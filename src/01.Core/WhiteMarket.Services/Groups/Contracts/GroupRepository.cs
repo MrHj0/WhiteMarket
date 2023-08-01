@@ -9,6 +9,7 @@ namespace WhiteMarket.Services.Groups.Contracts
         void Delete(Group group);
         bool IsDuplicatedName(string name);
         bool IsDuplicatedNameExceptThisGroup(int groupId,string name);
+        bool IsGroupExsistByGroupId(int groupId);
         Group? GetGroupById(int groupId);
         HashSet<GetAllGroupsDto> GetAllGroups();
         GetOneGroupWithProductsDto GetOneGroupWithProductsByGroupId(int groupId);

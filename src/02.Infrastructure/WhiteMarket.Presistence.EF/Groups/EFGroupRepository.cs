@@ -51,7 +51,7 @@ namespace WhiteMarket.Presistence.EF.Groups
                 {
                     Id = _.Id,
                     Name = _.Name,
-                    //Products = _.Products.Select(p => p.Title).ToHashSet()
+                    Products = _.Products.Select(p => p.Title).ToHashSet()
                 }).First();
         }
 
@@ -64,6 +64,11 @@ namespace WhiteMarket.Presistence.EF.Groups
         {
             return _groups
                 .Any(_ => _.Name == name && _.Id != groupId);
+        }
+
+        public bool IsGroupExsistByGroupId(int groupId)
+        {
+            return _groups.Any(_ => _.Id == groupId);
         }
     }
 }
