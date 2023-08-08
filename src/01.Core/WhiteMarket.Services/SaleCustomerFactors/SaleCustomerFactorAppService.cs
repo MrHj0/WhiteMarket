@@ -40,16 +40,21 @@ namespace WhiteMarket.Services.SaleCustomerFactors
         {
             var product = _productRepository.FindById(dto.ProductId);
 
-            product.Inventory -= dto.Count;
+            product.Inventory = product.Inventory - dto.Count;
             if (product.Inventory > product.MinimumInventory)
             {
                 product.Status = InventoryStatus.Avalable;
             }
-            else
+
+            else if(product.Inventory < product.MinimumInventory && product.Inventory != 0)
             {
                 product.Status = InventoryStatus.LowInventory;
             }
 
+            else if(product.Inventory == 0)
+            {
+                product.Status = InventoryStatus.UnAvalable;
+            }
             var customerFactor = new SaleCustomerFactor
             {
                 Count = dto.Count,
@@ -58,7 +63,7 @@ namespace WhiteMarket.Services.SaleCustomerFactors
                 Id = dto.FactorId,
                 Price = dto.Price,
                 ProductId = dto.ProductId,
-                ProductName = dto.ProductName
+                ProductName = product.Title
             };
             var accountingFactor = new SaleAccountingFactor
             {

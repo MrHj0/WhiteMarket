@@ -15,9 +15,9 @@ namespace WhiteMarket.Presistence.EF.ProductEntryFactors
         {
             entryFactor.ToTable("ProductEntryFactors");
 
-            entryFactor.HasKey(_ => _.DummyPrimaryKey);
+            entryFactor.HasKey(_ => _.PrimaryKey);
 
-            entryFactor.Property(_=>_.DummyPrimaryKey).ValueGeneratedNever();
+            entryFactor.Property(_=>_.PrimaryKey).ValueGeneratedOnAdd();
             entryFactor.Property(_ => _.Id).IsRequired();
             entryFactor.Property(_ => _.ProductId).IsRequired();
             entryFactor.Property(_ => _.ProductEntryCount).IsRequired();

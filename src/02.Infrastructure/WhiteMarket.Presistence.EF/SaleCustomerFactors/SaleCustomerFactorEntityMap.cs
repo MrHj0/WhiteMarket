@@ -15,9 +15,9 @@ namespace WhiteMarket.Presistence.EF.SaleCustomerFactors
         {
             customerFactor.ToTable("SaleCustomerFactors");
 
-            customerFactor.HasKey(_ => _.DummyPrimaryKey);
+            customerFactor.HasKey(_ => _.PrimaryKey);
 
-            customerFactor.Property(_ => _.DummyPrimaryKey).ValueGeneratedNever();
+            customerFactor.Property(_ => _.PrimaryKey).ValueGeneratedOnAdd();
             customerFactor.Property(_ => _.Id).IsRequired();
             customerFactor.Property(_ => _.ProductId).IsRequired();
             customerFactor.Property(_ => _.ProductName).IsRequired().HasMaxLength(50);

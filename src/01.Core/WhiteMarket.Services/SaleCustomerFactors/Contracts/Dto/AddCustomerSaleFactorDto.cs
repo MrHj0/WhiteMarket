@@ -11,8 +11,6 @@ namespace WhiteMarket.Services.SaleCustomerFactors.Contracts.Dto
     {
         [Required,MaxLength(50)]
         public string FactorId { get; set; }
-        [Required,MaxLength(50)]
-        public string ProductName { get; set; }
         [Required]
         public int ProductId { get; set; }
         public int Price { get; set; }

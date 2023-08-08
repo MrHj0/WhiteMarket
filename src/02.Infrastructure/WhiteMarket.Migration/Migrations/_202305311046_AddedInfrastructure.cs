@@ -38,7 +38,7 @@ namespace WhiteMarket.Migration.Migrations
         private void CreateSaleCustomerFactors()
         {
             Create.Table("SaleCustomerFactors")
-                .WithColumn("DummyPrimaryKey").AsInt32().PrimaryKey()
+                .WithColumn("PrimaryKey").AsInt32().PrimaryKey().Identity()
                 .WithColumn("Id").AsString(50).NotNullable()
                 .WithColumn("ProductId").AsInt32().NotNullable()
                 .WithColumn("ProductName").AsString(50).NotNullable()
@@ -50,7 +50,7 @@ namespace WhiteMarket.Migration.Migrations
         private void CreateProductEntryFactors()
         {
             Create.Table("ProductEntryFactors")
-                .WithColumn("DummyPrimaryKey").AsInt32().PrimaryKey()
+                .WithColumn("PrimaryKey").AsInt32().PrimaryKey().Identity()
                 .WithColumn("Id").AsString(50).NotNullable()
                 .WithColumn("ProductId").AsInt32().NotNullable()
                 .WithColumn("ProductEntryCount").AsInt32().NotNullable()

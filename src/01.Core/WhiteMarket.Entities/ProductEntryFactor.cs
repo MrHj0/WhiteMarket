@@ -8,7 +8,7 @@ namespace WhiteMarket.Entities
 {
     public class ProductEntryFactor
     {
-        public int DummyPrimaryKey { get; set; }
+        public int PrimaryKey { get; set; }
         public string Id { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; }
