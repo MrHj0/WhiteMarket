@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WhiteMarket.Entities;
 using WhiteMarket.Services.Groups;
+using WhiteMarket.Services.Groups.Contracts;
 using WhiteMarket.Services.Groups.Exceptions;
 using WhiteMarket.TestTools.DataBaseConfig;
 using WhiteMarket.TestTools.DataBaseConfig.Unit;
@@ -15,7 +16,7 @@ namespace WhiteMarket.Services.Unit.Tests
 {
     public class GroupServiceUnitTest : BusinessUnitTest
     {
-        private readonly GroupAppService _sut;
+        private readonly GroupService _sut;
 
         public GroupServiceUnitTest()
         {
@@ -87,21 +88,21 @@ namespace WhiteMarket.Services.Unit.Tests
         {
             var group = GroupFactory.Generate();
             DbContext.Save(group);
-            var newName = "dummy_edit_name";
+            var dto = EditGroupNameFactory.Generate();
 
-            _sut.EditGroupName(group.Id, newName);
+            _sut.EditGroupName(group.Id, dto);
 
             var expected = ReadContext.Set<Group>().Single();
-            expected.Name.Should().Be(newName);
+            expected.Name.Should().Be(dto.Name);
         }
 
         [Fact]
         public void EditGroupName_throw_exception_when_group_id_is_invalid()
         {
             var invalidId = -1;
-            var newName = "dummy_edit_name";
+            var dto = EditGroupNameFactory.Generate();
 
-            var expected = () => _sut.EditGroupName(invalidId, newName);
+            var expected = () => _sut.EditGroupName(invalidId, dto);
 
             expected.Should().ThrowExactly<GroupNotFoundException>();
         }
@@ -113,15 +114,15 @@ namespace WhiteMarket.Services.Unit.Tests
             DbContext.Save(group1);
             var group2 = GroupFactory.Generate("dummy_name_2");
             DbContext.Save(group2);
-            var newName = "dummy";
+            var dto = EditGroupNameFactory.Generate();
 
-            var expected = () => _sut.EditGroupName(group2.Id, newName);
+            var expected = () => _sut.EditGroupName(group2.Id, dto);
 
             expected.Should().ThrowExactly<GroupNameIsDuplicatedException>();
         }
 
         [Fact]
-        public void GetAllGroups()
+        public void GetAllGroups_get_all_groups_properly()
         {
             var group = GroupFactory.Generate();
             DbContext.Save(group);
@@ -133,7 +134,7 @@ namespace WhiteMarket.Services.Unit.Tests
         }
 
         [Fact]
-        public void GetOneGroupWithProducts()
+        public void GetOneGroupWithProducts_get_one_group_with_products()
         {
             var group = GroupFactory.Generate();
             var product = new Product

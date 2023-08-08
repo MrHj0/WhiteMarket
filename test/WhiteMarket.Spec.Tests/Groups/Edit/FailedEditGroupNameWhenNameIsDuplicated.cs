@@ -33,8 +33,8 @@ namespace WhiteMarket.Spec.Tests.Groups.Edit
         public void When()
         {
             var sut = GroupAppServiceFactory.Generate(SetupContext);
-
-            _expected = () => sut.EditGroupName(_group2.Id, "دیجیتال");
+            var dto = EditGroupNameFactory.Generate("دیجیتال");
+            _expected = () => sut.EditGroupName(_group2.Id, dto);
         }
 
         [Then("خطایی با عنوان 'اسم گروه تکراری' باید رخ دهد")]

@@ -22,13 +22,17 @@ namespace WhiteMarket.Spec.Tests.Products.Define
         private Group _group;
 
         [Given("دو گروه با عنوان های  اسباب بازی و لبنیات " +
-            "در فهرست گروه ها وجود دارد"+
+            "در فهرست گروه ها وجود دارد" +
             "و: یک کالا با عنوان شیر در فهرست کالا های لبنیات وجود دارد")]
         public void Given()
         {
             _group = GroupFactory.Generate("اسباب بازی");
             var group = GroupFactory.Generate("لبنیات");
-            DbContext.SaveRange(_group,group);
+            var product = new ProductBuilder(group)
+                .WithTitle("شیر")
+                .Build();
+            DbContext.Save(product);
+            DbContext.Save(_group);
         }
 
         [When("یک کالا با عنوان شیر " +
@@ -53,7 +57,7 @@ namespace WhiteMarket.Spec.Tests.Products.Define
             "و موجودی ۰  باید فهرست کالا موجود باشد")]
         public void Then()
         {
-            var expected = ReadContext.Set<Product>().Single();
+            var expected = ReadContext.Set<Product>().OrderBy(_=>_.Id).Last();
             expected.Title.Should().Be("شیر");
             expected.GroupId.Should().Be(_group.Id);
             expected.MinimumInventory.Should().Be(10);

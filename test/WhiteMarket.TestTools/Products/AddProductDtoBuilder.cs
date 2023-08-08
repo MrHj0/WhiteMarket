@@ -9,24 +9,31 @@ namespace WhiteMarket.TestTools.Products
 {
     public class AddProductDtoBuilder
     {
-        private static AddProductDto _addProductDto;
+        private readonly AddProductDto _addProductDto;
 
         public AddProductDtoBuilder(int groupId)
         {
-            _addProductDto.GroupId = groupId;
+            _addProductDto = new AddProductDto
+            {
+                Title = "dummy_title",
+                GroupId = groupId,
+                MinimumInventory = 10
+            };
         }
 
-        public static void Title(string title)
+        public AddProductDtoBuilder Title(string title)
         {
             _addProductDto.Title = title;
+            return this;
         }
-        public static void MinimumInventory(int minInventory)
+        public AddProductDtoBuilder MinimumInventory(int minInventory)
         {
             _addProductDto.MinimumInventory = minInventory;
+            return this;
         }
+        
 
-
-        public static AddProductDto Build()
+        public AddProductDto Build()
         {
             return _addProductDto;
         }

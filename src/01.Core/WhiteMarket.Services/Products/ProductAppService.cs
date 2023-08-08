@@ -37,6 +37,10 @@ namespace WhiteMarket.Services.Products
             _productRepository.Add(product);
             _unitOfWork.Complete();
         }
+        public HashSet<GetAllProductsDto> GetAllProducts(ProductSearchDto? dto)
+        {
+            return _productRepository.GetAll(dto);
+        }
 
 
         private Product CreateProduct(AddProductDto dto)
@@ -68,5 +72,6 @@ namespace WhiteMarket.Services.Products
                 throw new GroupNotFoundException();
             }
         }
+
     }
 }

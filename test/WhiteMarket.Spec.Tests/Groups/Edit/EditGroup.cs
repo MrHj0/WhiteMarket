@@ -27,8 +27,9 @@ namespace WhiteMarket.Spec.Tests.Groups.Edit
         public void When()
         {
             var sut = GroupAppServiceFactory.Generate(SetupContext);
+            var dto = EditGroupNameFactory.Generate("لبنیات");
 
-            sut.EditGroupName(_group.Id, "لبنیات");
+            sut.EditGroupName(_group.Id, dto);
         }
 
         [Then("نام دسته بندی دیجیتال به لبنیات باید تغییر کرده باشد")]

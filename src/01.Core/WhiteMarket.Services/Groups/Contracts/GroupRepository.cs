@@ -6,7 +6,7 @@ namespace WhiteMarket.Services.Groups.Contracts
     public interface GroupRepository
     {
         void Add(Group group);
-        void Delete(Group group);
+        void Remove(Group group);
         bool IsDuplicatedName(string name);
         bool IsDuplicatedNameExceptThisGroup(int groupId,string name);
         bool IsGroupExsistByGroupId(int groupId);

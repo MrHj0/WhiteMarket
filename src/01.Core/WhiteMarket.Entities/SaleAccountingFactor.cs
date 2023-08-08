@@ -8,7 +8,7 @@ namespace WhiteMarket.Entities
 {
     public class SaleAccountingFactor
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string CustomerFactorId { get; set; }
         public int TotalPrice { get; set; }
         public DateTime Date { get; set; }

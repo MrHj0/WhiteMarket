@@ -26,42 +26,43 @@ namespace WhiteMarket.Migration.Migrations
             Delete.Table("Products");
             Delete.Table("Groups");
         }
+
         private void CreateSaleAccountingFactors()
         {
             Create.Table("SaleAccountingFactors")
-                .WithColumn("Id").AsInt32().PrimaryKey()
+                .WithColumn("Id").AsGuid().PrimaryKey()
                 .WithColumn("TotalPrice").AsInt32().NotNullable()
-                .WithColumn("CustomerFactorId").AsString().NotNullable()
-                .WithColumn("Date").AsDate().NotNullable();
+                .WithColumn("CustomerFactorId").AsString(50).NotNullable()
+                .WithColumn("Date").AsDateTime2().NotNullable();
         }
         private void CreateSaleCustomerFactors()
         {
             Create.Table("SaleCustomerFactors")
                 .WithColumn("DummyPrimaryKey").AsInt32().PrimaryKey()
-                .WithColumn("Id").AsString().NotNullable()
-                .WithColumn("ProductId").AsInt16().NotNullable()
-                .WithColumn("ProductName").AsString().NotNullable()
+                .WithColumn("Id").AsString(50).NotNullable()
+                .WithColumn("ProductId").AsInt32().NotNullable()
+                .WithColumn("ProductName").AsString(50).NotNullable()
                 .WithColumn("Price").AsInt32().NotNullable()
                 .WithColumn("Count").AsInt32().NotNullable()
-                .WithColumn("CustomerName").AsString().NotNullable()
-                .WithColumn("Date").AsDate().NotNullable();
+                .WithColumn("CustomerName").AsString(50).NotNullable()
+                .WithColumn("Date").AsDateTime2().NotNullable();
         }
         private void CreateProductEntryFactors()
         {
             Create.Table("ProductEntryFactors")
                 .WithColumn("DummyPrimaryKey").AsInt32().PrimaryKey()
-                .WithColumn("Id").AsString().NotNullable()
+                .WithColumn("Id").AsString(50).NotNullable()
                 .WithColumn("ProductId").AsInt32().NotNullable()
                 .WithColumn("ProductEntryCount").AsInt32().NotNullable()
-                .WithColumn("ProductName").AsString().NotNullable()
-                .WithColumn("CompanyName").AsString().NotNullable()
-                .WithColumn("Date").AsDateTime().NotNullable();
+                .WithColumn("ProductName").AsString(50).NotNullable()
+                .WithColumn("CompanyName").AsString(50).NotNullable()
+                .WithColumn("Date").AsDateTime2().NotNullable();
         }
         private void CreateGroups()
         {
             Create.Table("Groups")
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity()
-                .WithColumn("Name").AsString().NotNullable();
+                .WithColumn("Name").AsString(50).NotNullable();
         }
         private void CreateProducts()
         {

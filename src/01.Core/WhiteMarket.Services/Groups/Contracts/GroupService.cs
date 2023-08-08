@@ -6,7 +6,7 @@ namespace WhiteMarket.Services.Groups.Contracts
     {
         void Define(AddGroupDto dto);
         void Delete(int groupId);
-        void EditGroupName(int groupId, string name);
+        void EditGroupName(int groupId, EditGroupNameDto dto);
         HashSet<GetAllGroupsDto> GetAllGroups();
         GetOneGroupWithProductsDto GetOneGroupWithProducts(int groupId);
     }

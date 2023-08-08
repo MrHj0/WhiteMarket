@@ -10,5 +10,6 @@ namespace WhiteMarket.Services.Products.Contracts
     public interface ProductService
     {
         void Define(AddProductDto dto);
+        HashSet<GetAllProductsDto> GetAllProducts(ProductSearchDto? dto);
     }
 }

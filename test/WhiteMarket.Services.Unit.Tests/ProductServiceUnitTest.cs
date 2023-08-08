@@ -55,7 +55,7 @@ namespace WhiteMarket.Services.Unit.Tests
         }
 
         [Fact]
-        public void Define()
+        public void Define_throw_exception_when_product_name_is_duplicated()
         {
             var group = GroupFactory.Generate();
             var product = ProductFactory.Generate(group);
@@ -65,6 +65,33 @@ namespace WhiteMarket.Services.Unit.Tests
             var excepted = ()=> _sut.Define(dto);
 
             excepted.Should().ThrowExactly<ProductNameIsDuplicatedInThisGroupExcepton>();
+        }
+
+
+
+        [Theory]
+        [InlineData(InventoryStatus.UnAvalable)]
+        [InlineData(InventoryStatus.Avalable)]
+        [InlineData(InventoryStatus.LowInventory)]
+        public void GetAllProducts_get_all_products_properly(InventoryStatus type)
+        {
+            var group = GroupFactory.Generate();
+            var product = new ProductBuilder(group)
+                .WithStatus(type)
+                .Build();
+            DbContext.Save(product);
+            var search = new ProductSearchDto
+            {
+                Title = "dumm",
+                GroupName = "dum",
+                Status = type
+            };
+            
+            var expected = _sut.GetAllProducts(search);
+
+            expected.Single().Title.Should().Contain(search.Title);
+            expected.Single().GroupName.Should().Contain(search.GroupName);
+            expected.Single().Status.Should().Be(search.Status);
         }
     }
 }

@@ -31,15 +31,15 @@ namespace WhiteMarket.Services.Groups
             _unitOfWork.Complete();
         }
 
-        public void EditGroupName(int groupId, string name)
+        public void EditGroupName(int groupId, EditGroupNameDto dto)
         {
             var group = _groupRepository.GetGroupById(groupId);
 
             StopIfGroupNotFound(group);
 
-            StopIfGroupNameIsDuplicated(groupId, name);
+            StopIfGroupNameIsDuplicated(groupId, dto.Name);
 
-            group.Name = name;
+            group.Name = dto.Name;
             _unitOfWork.Complete();
         }
 
@@ -53,9 +53,20 @@ namespace WhiteMarket.Services.Groups
             StopIfGroupHasProduct(group);
 
 
-            _groupRepository.Delete(group);
+            _groupRepository.Remove(group);
             _unitOfWork.Complete();
         }
+
+        public GetOneGroupWithProductsDto GetOneGroupWithProducts(int groupId)
+        {
+            return _groupRepository.GetOneGroupWithProductsByGroupId(groupId);
+        }
+
+        public HashSet<GetAllGroupsDto> GetAllGroups()
+        {
+            return _groupRepository.GetAllGroups();
+        }
+
 
         private void StopIfGroupHasProduct(Group group)
         {
@@ -90,14 +101,6 @@ namespace WhiteMarket.Services.Groups
             }
         }
 
-        public HashSet<GetAllGroupsDto> GetAllGroups()
-        {
-            return _groupRepository.GetAllGroups();
-        }
 
-        public GetOneGroupWithProductsDto GetOneGroupWithProducts(int groupId)
-        {
-            return _groupRepository.GetOneGroupWithProductsByGroupId(groupId);
-        }
     }
 }

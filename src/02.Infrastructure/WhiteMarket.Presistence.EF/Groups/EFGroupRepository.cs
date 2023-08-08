@@ -20,7 +20,7 @@ namespace WhiteMarket.Presistence.EF.Groups
             _groups.Add(group);
         }
 
-        public void Delete(Group group)
+        public void Remove(Group group)
         {
             _groups.Remove(group);
         }
